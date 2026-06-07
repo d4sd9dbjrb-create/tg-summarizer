@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow center">
+  <h2>✅ Аккаунт подключён</h2>
+  <p>Теперь привяжи бота к своему Telegram, чтобы пользоваться функциями.</p>
+  <a href="{{ deep_link }}" class="btn primary big">Открыть бота @{{ bot }}</a>
+  <p class="muted small">
+    После нажатия Telegram откроет бота и запустит команду <code>/start</code>.
+    Если deep-link не сработал — открой
+    <a href="https://t.me/{{ bot }}">@{{ bot }}</a> вручную и пришли команду
+    <code>/start</code> с кодом, который тебе выдан.
+  </p>
+  <div class="step">Шаг 4 из 4</div>
+</section>
+{% endblock %}

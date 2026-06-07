@@ -1,0 +1,14 @@
+{
+  "name": "talky-m3",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:m3": "node build-m3.mjs"
+  },
+  "dependencies": {
+    "@material/web": "^2.3.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

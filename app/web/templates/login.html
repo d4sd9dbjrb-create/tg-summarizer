@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h2>Подключение Telegram</h2>
+  <p class="muted">Выбери удобный способ входа.</p>
+
+  <div class="login-options">
+    <a href="/login/qr" class="btn primary big">📱 По QR-коду<br/><span>Telegram → Настройки → Устройства → Подключить устройство</span></a>
+    <div class="or">или</div>
+    <form method="post" action="/login/phone" class="phone-form">
+      <label>Номер телефона (с кодом страны)</label>
+      <input type="tel" name="phone" placeholder="+79991234567" required />
+      <button type="submit" class="btn">Получить код</button>
+    </form>
+  </div>
+
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <div class="step">Шаг 3 из 4</div>
+</section>
+{% endblock %}

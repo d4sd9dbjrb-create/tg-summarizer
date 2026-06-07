@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>Talky — Material 3 (Google components)</title>
+
+<!-- Material Symbols (иконки Google) + шрифт Roboto Flex (родной для M3) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=block">
+
+<!-- РЕАЛЬНЫЕ компоненты Google @material/web (через esm.run CDN) -->
+<script type="module">
+  import 'https://esm.run/@material/web/all.js';
+  import {styles as typescaleStyles} from 'https://esm.run/@material/web/typography/md-typescale-styles.js';
+  document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  // Убираем loading-оверлей когда компоненты определены
+  customElements.whenDefined('md-filled-button').then(() => {
+    document.body.classList.add('mw-ready');
+  });
+</script>
+
+<style>
+/* ════════════════════════════════════════════════
+   TALKY — Material 3 baseline (официальные токены Google)
+   Фирменный фиолетовый seed #6750A4 — узнаваемый тон M3.
+   ════════════════════════════════════════════════ */
+:root {
+  /* ── M3 sys color (official baseline light) ── */
+  --md-sys-color-primary:               #6750A4;
+  --md-sys-color-on-primary:            #FFFFFF;
+  --md-sys-color-primary-container:     #EADDFF;
+  --md-sys-color-on-primary-container:  #4F378B;
+
+  --md-sys-color-secondary:             #625B71;
+  --md-sys-color-on-secondary:          #FFFFFF;
+  --md-sys-color-secondary-container:   #E8DEF8;
+  --md-sys-color-on-secondary-container:#4A4458;
+
+  --md-sys-color-tertiary:              #7D5260;
+  --md-sys-color-on-tertiary:           #FFFFFF;
+  --md-sys-color-tertiary-container:    #FFD8E4;
+  --md-sys-color-on-tertiary-container: #633B48;
+
+  --md-sys-color-error:                 #B3261E;
+  --md-sys-color-error-container:       #F9DEDC;
+  --md-sys-color-on-error-container:    #852221;
+
+  --md-sys-color-surface:               #FEF7FF;
+  --md-sys-color-surface-dim:           #DED8E1;
+  --md-sys-color-surface-bright:        #FEF7FF;
+  --md-sys-color-surface-container-lowest:#FFFFFF;
+  --md-sys-color-surface-container-low: #F7F2FA;
+  --md-sys-color-surface-container:     #F3EDF7;
+  --md-sys-color-surface-container-high:#ECE6F0;
+  --md-sys-color-surface-container-highest:#E6E0E9;
+
+  --md-sys-color-on-surface:            #1D1B20;
+  --md-sys-color-on-surface-variant:    #49454F;
+  --md-sys-color-outline:               #79747E;
+  --md-sys-color-outline-variant:       #CAC4D0;
+
+  --md-sys-color-inverse-surface:       #322F35;
+  --md-sys-color-inverse-on-surface:    #F5EFF7;
+  --md-sys-color-inverse-primary:       #D0BCFF;
+
+  /* ── M3 shape scale ── */
+  --md-sys-shape-corner-s:  8px;
+  --md-sys-shape-corner-m:  12px;
+  --md-sys-shape-corner-l:  16px;
+  --md-sys-shape-corner-xl: 28px;
+
+  /* ── M3 motion ── */
+  --md-sys-motion-emph: cubic-bezier(.2,0,0,1);
+  --md-sys-motion-spring: cubic-bezier(.34,1.4,.64,1);
+
+  /* Привязываем компоненты Google к нашим токенам/шрифту */
+  --md-ref-typeface-brand: 'Roboto Flex';
+  --md-ref-typeface-plain: 'Roboto Flex';
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+body{
+  background:var(--md-sys-color-surface);
+  color:var(--md-sys-color-on-surface);
+  font-family:'Roboto Flex','Roboto',-apple-system,sans-serif;
+  min-height:100vh;
+  padding:0 0 110px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Прячем «сырой» текст компонентов до загрузки библиотеки */
+body:not(.mw-ready) md-filled-button,
+body:not(.mw-ready) md-fab,
+body:not(.mw-ready) md-list,
+body:not(.mw-ready) md-linear-progress { visibility:hidden }
+
+.msym{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;
+  line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;
+  white-space:nowrap;word-wrap:normal;direction:ltr;
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* ════════════════════════════════════════
+   КРАСИВЫЙ ФОН M3 — мягкие тональные пятна
+   из палитры (primary/secondary/tertiary
+   containers), низкая прозрачность, blur.
+   Чистый Material-feel, не «грязь».
+   ════════════════════════════════════════ */
+.m3-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.m3-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55}
+.m3-blob.b1{width:300px;height:300px;top:-80px;right:-60px;
+  background:var(--md-sys-color-primary-container)}
+.m3-blob.b2{width:260px;height:260px;top:30%;left:-100px;
+  background:var(--md-sys-color-tertiary-container)}
+.m3-blob.b3{width:240px;height:240px;bottom:-40px;right:-40px;
+  background:var(--md-sys-color-secondary-container)}
+/* Тонкая геометрия поверх — чёткие фигуры M3 */
+.m3-shape{position:absolute;opacity:.5}
+
+main{position:relative;z-index:1}
+
+/* ── Top App Bar (собран на токенах M3) ── */
+.top-app-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 16px 8px;
+}
+.tab-brand{display:flex;align-items:center;gap:12px}
+.tab-logo{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--md-sys-color-primary);
+  display:flex;align-items:center;justify-content:center;
+}
+.tab-logo .msym{color:var(--md-sys-color-on-primary);font-size:24px}
+.tab-title{font-size:22px;font-weight:500;letter-spacing:0}
+
+/* ── Hero greeting ── */
+.hero{padding:8px 20px 18px}
+.hero-greet{font-size:14px;font-weight:500;color:var(--md-sys-color-on-surface-variant)}
+.hero-name{font-size:32px;font-weight:700;line-height:1.15;letter-spacing:-.5px;margin-top:2px;
+  animation:revealUp .5s var(--md-sys-motion-emph) both}
+.hero-sub{font-size:15px;color:var(--md-sys-color-on-surface-variant);margin-top:8px}
+
+/* ── Hero card (M3 filled card, собран на токенах) ── */
+.hero-card{
+  margin:0 16px 24px;
+  background:var(--md-sys-color-primary-container);
+  border-radius:var(--md-sys-shape-corner-xl);
+  padding:20px;display:flex;align-items:center;gap:16px;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:transform .3s var(--md-sys-motion-spring);
+}
+.hero-card:active{transform:scale(.97)}
+.hero-card-icon{
+  width:56px;height:56px;border-radius:var(--md-sys-shape-corner-l);
+  background:var(--md-sys-color-primary);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.hero-card-icon .msym{color:var(--md-sys-color-on-primary);font-size:30px}
+.hero-card-text{flex:1}
+.hero-card-title{font-size:18px;font-weight:600;color:var(--md-sys-color-on-primary-container)}
+.hero-card-sub{font-size:13px;color:var(--md-sys-color-on-primary-container);opacity:.8;margin-top:2px}
+.hero-card .msym.arrow{color:var(--md-sys-color-on-primary-container);opacity:.7}
+
+/* ── Section header ── */
+.section{padding:0 20px;margin-bottom:12px;font-size:16px;font-weight:600;color:var(--md-sys-color-on-surface)}
+
+/* ── Stat grid (M3 elevated-card style на токенах) ── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px;margin-bottom:28px}
+.stat-card{
+  border-radius:var(--md-sys-shape-corner-l);padding:18px;
+  position:relative;overflow:hidden;
+  transition:transform .3s var(--md-sys-motion-spring);
+  animation:revealUp .5s var(--md-sys-motion-emph) both;
+}
+.stat-card:active{transform:scale(.96)}
+.stat-card.c1{background:var(--md-sys-color-primary-container)}
+.stat-card.c2{background:var(--md-sys-color-secondary-container)}
+.stat-card.c3{background:var(--md-sys-color-tertiary-container)}
+.stat-card.c4{background:var(--md-sys-color-surface-container-high)}
+.stat-card .msym{font-size:24px;margin-bottom:10px;display:block}
+.stat-card.c1 .msym{color:var(--md-sys-color-primary)}
+.stat-card.c2 .msym{color:var(--md-sys-color-secondary)}
+.stat-card.c3 .msym{color:var(--md-sys-color-tertiary)}
+.stat-card.c4 .msym{color:var(--md-sys-color-on-surface-variant)}
+.stat-num{font-size:32px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--md-sys-color-on-surface)}
+.stat-lbl{font-size:13px;font-weight:500;color:var(--md-sys-color-on-surface-variant);margin-top:6px}
+.stat-card.c1{animation-delay:.06s}
+.stat-card.c2{animation-delay:.12s}
+.stat-card.c3{animation-delay:.18s}
+.stat-card.c4{animation-delay:.24s}
+
+/* ── List card (M3 surface-container) ── */
+.list-card{
+  margin:0 16px 16px;
+  background:var(--md-sys-color-surface-container-low);
+  border-radius:var(--md-sys-shape-corner-xl);
+  padding:8px;
+  animation:revealUp .5s var(--md-sys-motion-emph) .3s both;
+}
+.list-card-title{font-size:14px;font-weight:600;color:var(--md-sys-color-on-surface-variant);padding:12px 12px 8px}
+.bar-row{display:flex;align-items:center;gap:14px;padding:12px;border-radius:var(--md-sys-shape-corner-m);
+  transition:background .2s;position:relative;overflow:hidden;cursor:pointer}
+.bar-row:active{background:var(--md-sys-color-surface-container-high)}
+.bar-av{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;font-weight:600;font-size:16px}
+.bar-av.a1{background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.bar-av.a2{background:var(--md-sys-color-tertiary-container);color:var(--md-sys-color-on-tertiary-container)}
+.bar-av.a3{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.bar-av.a4{background:var(--md-sys-color-surface-container-highest);color:var(--md-sys-color-on-surface-variant)}
+.bar-info{flex:1;min-width:0}
+.bar-name{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:6px;background:var(--md-sys-color-surface-container-highest);border-radius:99px;margin-top:8px;overflow:hidden}
+.bar-fill{height:100%;background:var(--md-sys-color-primary);border-radius:99px;transform-origin:left;animation:growBar .8s var(--md-sys-motion-emph) both}
+.bar-val{font-size:14px;font-weight:600;color:var(--md-sys-color-on-surface-variant);flex-shrink:0;font-variant-numeric:tabular-nums}
+
+/* ── FAB (РЕАЛЬНЫЙ md-fab Google) ── */
+.fab-wrap{position:fixed;right:16px;bottom:90px;z-index:20}
+
+/* ── Navigation bar (M3, собран на токенах) ── */
+.nav-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:15;
+  height:80px;display:flex;
+  background:var(--md-sys-color-surface-container);
+  padding:12px 8px max(12px,env(safe-area-inset-bottom));
+}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;border:none;background:none;font-family:inherit}
+.nav-pill{width:64px;height:32px;border-radius:99px;display:flex;align-items:center;
+  justify-content:center;transition:background .2s var(--md-sys-motion-emph)}
+.nav-item.active .nav-pill{background:var(--md-sys-color-secondary-container)}
+.nav-pill .msym{font-size:24px;color:var(--md-sys-color-on-surface-variant);font-variation-settings:'FILL' 0}
+.nav-item.active .nav-pill .msym{color:var(--md-sys-color-on-secondary-container);font-variation-settings:'FILL' 1}
+.nav-label{font-size:12px;font-weight:500;color:var(--md-sys-color-on-surface-variant)}
+.nav-item.active .nav-label{color:var(--md-sys-color-on-surface);font-weight:600}
+
+/* ── Animations ── */
+@keyframes revealUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes growBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+</style>
+</head>
+<body>
+
+<!-- Красивый фон Material 3: тональные пятна из палитры -->
+<div class="m3-bg" aria-hidden="true">
+  <div class="m3-blob b1"></div>
+  <div class="m3-blob b2"></div>
+  <div class="m3-blob b3"></div>
+  <!-- Чёткие геометрические фигуры M3 поверх -->
+  <svg class="m3-shape" style="top:8%;left:8%;width:40px;fill:var(--md-sys-color-primary);opacity:.10" viewBox="0 0 48 48"><path d="M24 2c2 12 8 18 20 22-12 4-18 10-20 22-2-12-8-18-20-22 12-4 18-10 20-22Z"/></svg>
+  <svg class="m3-shape" style="top:42%;right:10%;width:30px;fill:var(--md-sys-color-tertiary);opacity:.12" viewBox="0 0 48 48"><rect width="48" height="48" rx="16"/></svg>
+  <svg class="m3-shape" style="bottom:18%;left:12%;width:24px;fill:var(--md-sys-color-secondary);opacity:.12" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24"/></svg>
+</div>
+
+<main>
+  <!-- Top App Bar -->
+  <div class="top-app-bar">
+    <div class="tab-brand">
+      <div class="tab-logo"><span class="msym">forum</span></div>
+      <div class="tab-title">Talky</div>
+    </div>
+    <div style="display:flex;gap:4px">
+      <md-icon-button><span class="msym">search</span></md-icon-button>
+      <md-icon-button><span class="msym">settings</span></md-icon-button>
+    </div>
+  </div>
+
+  <!-- Hero greeting -->
+  <div class="hero">
+    <div class="hero-greet">С возвращением</div>
+    <div class="hero-name">Привет, Алекс</div>
+    <div class="hero-sub">Вот что происходило в твоих чатах за 7 дней</div>
+  </div>
+
+  <!-- Primary action -->
+  <div class="hero-card">
+    <div class="hero-card-icon"><span class="msym">auto_awesome</span></div>
+    <div class="hero-card-text">
+      <div class="hero-card-title">Задать вопрос</div>
+      <div class="hero-card-sub">Спроси что угодно о своих чатах</div>
+    </div>
+    <span class="msym arrow">chevron_right</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">Обзор за неделю</div>
+  <div class="stat-grid">
+    <div class="stat-card c1"><span class="msym">inventory_2</span><div class="stat-num">12.3k</div><div class="stat-lbl">в архиве</div></div>
+    <div class="stat-card c2"><span class="msym">forum</span><div class="stat-num">128</div><div class="stat-lbl">активных чатов</div></div>
+    <div class="stat-card c3"><span class="msym">north_east</span><div class="stat-num">146</div><div class="stat-lbl">отправлено</div></div>
+    <div class="stat-card c4"><span class="msym">south_west</span><div class="stat-num">8.7k</div><div class="stat-lbl">получено</div></div>
+  </div>
+
+  <!-- Top chats -->
+  <div class="section">Топ чатов</div>
+  <div class="list-card">
+    <div class="bar-row">
+      <div class="bar-av a1">S</div>
+      <div class="bar-info"><div class="bar-name">spline community</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+      <div class="bar-val">2.0k</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-av a2">A</div>
+      <div class="bar-info"><div class="bar-name">AFaGP Комментарии</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+      <div class="bar-val">1.7k</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-av a3">R</div>
+      <div class="bar-info"><div class="bar-name">Ross CHAT</div><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></div>
+      <div class="bar-val">1.3k</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-av a4">R</div>
+      <div class="bar-info"><div class="bar-name">Rozetked Discuss</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div></div>
+      <div class="bar-val">1.2k</div>
+    </div>
+  </div>
+
+  <!-- Filled button (РЕАЛЬНЫЙ компонент Google) -->
+  <div style="padding:8px 16px">
+    <md-filled-button style="--md-filled-button-container-shape:99px;height:48px">
+      <span class="msym" slot="icon">analytics</span>
+      Полный анализ
+    </md-filled-button>
+  </div>
+</main>
+
+<!-- РЕАЛЬНЫЙ md-fab Google -->
+<div class="fab-wrap">
+  <md-fab variant="primary" label="Спросить" aria-label="Спросить">
+    <span class="msym" slot="icon">add</span>
+  </md-fab>
+</div>
+
+<!-- Navigation bar -->
+<nav class="nav-bar">
+  <button class="nav-item active">
+    <span class="nav-pill"><span class="msym">home</span></span>
+    <span class="nav-label">Главная</span>
+  </button>
+  <button class="nav-item">
+    <span class="nav-pill"><span class="msym">insights</span></span>
+    <span class="nav-label">Анализ</span>
+  </button>
+  <button class="nav-item">
+    <span class="nav-pill"><span class="msym">chat_bubble</span></span>
+    <span class="nav-label">Чат</span>
+  </button>
+  <button class="nav-item">
+    <span class="nav-pill"><span class="msym">settings</span></span>
+    <span class="nav-label">Настройки</span>
+  </button>
+</nav>
+
+</body>
+</html>

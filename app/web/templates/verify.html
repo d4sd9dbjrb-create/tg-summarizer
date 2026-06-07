@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h2>Введи код из Telegram</h2>
+  <p class="muted">Код пришёл в твоё приложение Telegram (на номер {{ phone }}).</p>
+  <form method="post" action="/verify">
+    <label>Код подтверждения</label>
+    <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" required autofocus />
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <button class="btn primary" type="submit">Подтвердить</button>
+  </form>
+  <div class="step">Шаг 3 из 4</div>
+</section>
+{% endblock %}

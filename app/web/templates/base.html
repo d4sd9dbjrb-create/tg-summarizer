@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{% block title %}Talky{% endblock %}</title>
+<style>
+  /* ── M3 Light theme ── */
+  :root {
+    --pri:   #276749;
+    --pri-c: #ADFFD3;
+    --on-pri-c: #00201A;
+    --sec-c: #CEE9D8;
+    --ter-c: #C0EAFB;
+    --surf:  #F4FBF6;
+    --surf-lo: #EFF7F1;
+    --surf-c: #EAF1EC;
+    --on-s:  #161D19;
+    --hint:  #404944;
+    --outl:  #BFC9C2;
+    --err-c: #F9DEDC;
+    --on-err-c: #852221;
+  }
+  /* ── M3 Dark theme ── */
+  @media (prefers-color-scheme: dark) { :root {
+    --pri:   #92D9B7;
+    --pri-c: #00513A;
+    --on-pri-c: #ADFFD3;
+    --sec-c: #344B3F;
+    --ter-c: #224C59;
+    --surf:  #0E1512;
+    --surf-lo: #161D19;
+    --surf-c: #1A2120;
+    --on-s:  #DCE5DF;
+    --hint:  #BFC9C2;
+    --outl:  #3F4946;
+    --err-c: #8C1D18;
+    --on-err-c: #F9DEDC;
+  } }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--surf);color:var(--on-s);
+    font-family:-apple-system,"Segoe UI",Roboto,Inter,sans-serif;
+    font-size:15px;line-height:1.65;min-height:100vh;
+    padding:24px 16px 48px;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+
+  /* ── Logo ── */
+  .logo{
+    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    font-size:20px;font-weight:800;margin-bottom:28px;
+    color:var(--pri);border-bottom:none;
+  }
+  .logo .beta{
+    font-size:11px;font-weight:700;color:var(--pri);
+    background:var(--pri-c);
+    padding:2px 9px;border-radius:8px;letter-spacing:.2px;
+  }
+
+  /* ── Article card ── */
+  article{
+    background:var(--surf-lo);
+    border:none;
+    border-radius:24px;padding:28px;
+  }
+
+  /* ── Typography ── */
+  h1{
+    font-size:26px;font-weight:800;letter-spacing:-.4px;margin-bottom:6px;
+    color:var(--pri);
+  }
+  h2{
+    font-size:17px;font-weight:700;margin:28px 0 10px;
+    color:var(--on-s);
+    display:flex;align-items:center;gap:10px;
+  }
+  h2::before{
+    content:'';width:4px;height:18px;border-radius:3px;flex-shrink:0;
+    background:var(--pri);
+  }
+  p,ul,ol{margin:10px 0;color:var(--on-s)}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  li::marker{color:var(--pri)}
+  b,strong{color:var(--on-s);font-weight:700}
+  code{
+    background:var(--surf-c);
+    color:var(--pri);
+    padding:2px 7px;border-radius:6px;
+    font-size:13px;font-family:ui-monospace,Menlo,monospace
+  }
+  a{color:var(--pri);text-decoration:none;border-bottom:1px solid var(--outl)}
+  a:hover{opacity:.8}
+  .muted{color:var(--hint);font-size:13px;margin-bottom:20px}
+
+  /* ── Callout ── */
+  .callout{
+    background:var(--pri-c);
+    border:none;
+    border-radius:16px;padding:14px 16px;margin:16px 0;
+    font-size:14px;color:var(--on-pri-c);
+  }
+  .callout b,.callout strong{color:var(--on-pri-c)}
+
+  /* ── Footer ── */
+  footer{
+    margin-top:32px;text-align:center;font-size:13px;color:var(--hint);
+    padding-top:20px;border-top:1px solid var(--outl);
+  }
+  footer a{color:var(--hint);border-bottom-color:var(--outl)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="logo">💬 Talky <span class="beta">beta</span></a>
+  {% block content %}{% endblock %}
+  <footer>
+    <a href="/tos">Пользовательское соглашение</a> ·
+    <a href="/privacy">Политика конфиденциальности</a>
+  </footer>
+</div>
+</body>
+</html>

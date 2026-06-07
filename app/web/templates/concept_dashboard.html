@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>Talky — Concept M3 Expressive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- M3 typography: используем Google Sans-подобный Inter Display + плотный заголовочный -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=block">
+<style>
+/* ════════════════════════════════════════════════
+   TALKY — Material 3 Expressive (concept)
+   Seed: vibrant rose. Tonal surface hierarchy.
+   Поверхности ПРИПОДНЯТЫ через тон, не утоплены.
+   ════════════════════════════════════════════════ */
+:root{
+  /* ── M3 tonal palette (light, pink seed) ── */
+  --primary:            #B4286E;
+  --on-primary:         #FFFFFF;
+  --primary-container:  #FFD8E7;
+  --on-primary-container:#400021;
+
+  --secondary:          #3E6A4F;   /* зелёный-tonal */
+  --secondary-container:#C2EFCF;
+  --on-secondary-container:#00210F;
+
+  --tertiary:           #7A5900;   /* тёплое золото */
+  --tertiary-container: #FFE08C;
+  --on-tertiary-container:#261A00;
+
+  /* Surfaces: иерархия от светлого к плотному */
+  --surface:            #FFF8FA;   /* фон экрана — самый светлый */
+  --surface-dim:        #E8D6DC;
+  --sc-lowest:          #FFFFFF;
+  --sc-low:             #FFF0F5;
+  --sc:                 #FCEAF0;
+  --sc-high:            #F6E3EA;
+  --sc-highest:         #F0DDE4;
+
+  --on-surface:         #20191C;   /* почти чёрный */
+  --on-surface-var:     #51434A;   /* приглушённый */
+  --outline:            #837379;
+  --outline-variant:    #D6C2C9;
+
+  /* Shape scale (M3) */
+  --r-xs: 8px;
+  --r-s:  12px;
+  --r-m:  16px;
+  --r-l:  24px;
+  --r-xl: 28px;
+  --r-full: 999px;
+
+  /* M3 elevation — тончайшие тени, не «дроп-шэдоу» */
+  --e1: 0 1px 2px rgba(32,25,28,.06), 0 1px 3px rgba(32,25,28,.04);
+  --e2: 0 1px 2px rgba(32,25,28,.08), 0 2px 6px rgba(32,25,28,.05);
+  --e3: 0 4px 8px rgba(32,25,28,.08), 0 1px 3px rgba(32,25,28,.06);
+
+  /* M3 Expressive motion */
+  --ease-emph: cubic-bezier(.2,0,0,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+body{
+  background:var(--surface);
+  color:var(--on-surface);
+  font-family:'Nunito',-apple-system,sans-serif;
+  min-height:100vh;
+  padding:0 0 100px;
+  overflow-x:hidden;
+}
+
+/* ── Top App Bar (M3 large) ── */
+.appbar{
+  padding:24px 20px 8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.appbar-brand{display:flex;align-items:center;gap:10px}
+.appbar-logo{
+  width:40px;height:40px;border-radius:var(--r-full);
+  background:var(--primary-container);
+  display:flex;align-items:center;justify-content:center;
+}
+.appbar-logo .msym{color:var(--on-primary-container);font-size:24px}
+.appbar-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.appbar-actions{display:flex;gap:4px}
+.icon-btn{
+  width:44px;height:44px;border:none;background:transparent;
+  border-radius:var(--r-full);cursor:pointer;color:var(--on-surface-var);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s var(--ease-emph);
+}
+.icon-btn:active{background:var(--sc-high)}
+.icon-btn .msym{font-size:24px}
+
+/* ── Hero greeting (M3 Display) ── */
+.hero{padding:8px 20px 20px}
+.hero-greet{
+  font-size:14px;font-weight:600;color:var(--on-surface-var);
+  text-transform:none;letter-spacing:0;margin-bottom:4px;
+  animation:revealUp .5s var(--ease-emph) both;
+}
+.hero-name{
+  font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-1px;
+  animation:revealUp .5s var(--ease-emph) .08s both;
+}
+.hero-sub{
+  font-size:15px;color:var(--on-surface-var);margin-top:8px;
+  animation:revealUp .5s var(--ease-emph) .16s both;
+}
+
+/* ── Primary action (M3 filled hero card) ── */
+.hero-card{
+  margin:4px 20px 24px;
+  background:var(--primary-container);
+  border-radius:var(--r-xl);
+  padding:20px;
+  display:flex;align-items:center;gap:16px;
+  cursor:pointer;
+  box-shadow:var(--e1);
+  transition:transform .3s var(--ease-spring), box-shadow .3s;
+  animation:revealUp .5s var(--ease-emph) .24s both;
+}
+.hero-card:active{transform:scale(.97);box-shadow:var(--e2)}
+.hero-card-icon{
+  width:56px;height:56px;border-radius:var(--r-m);
+  background:var(--primary);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.hero-card-icon .msym{color:var(--on-primary);font-size:30px}
+.hero-card-text{flex:1}
+.hero-card-title{font-size:18px;font-weight:800;color:var(--on-primary-container)}
+.hero-card-sub{font-size:13px;color:var(--on-primary-container);opacity:.75;margin-top:2px}
+.hero-card-arrow{color:var(--on-primary-container);opacity:.6}
+
+/* ── Section label (M3) ── */
+.section-label{
+  padding:0 20px;margin-bottom:12px;
+  font-size:14px;font-weight:800;color:var(--on-surface);letter-spacing:-.2px;
+}
+
+/* ── Stat grid (M3 tonal cards, RAISED) ── */
+.stat-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  padding:0 20px;margin-bottom:28px;
+}
+.stat-card{
+  border-radius:var(--r-l);
+  padding:18px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--e1);
+  transition:transform .3s var(--ease-spring);
+}
+.stat-card:active{transform:scale(.96)}
+/* Каждая карточка — свой tonal-контейнер из палитры */
+.stat-card.c1{background:var(--primary-container)}
+.stat-card.c2{background:var(--secondary-container)}
+.stat-card.c3{background:var(--tertiary-container)}
+.stat-card.c4{background:var(--sc-highest)}
+.stat-card .msym{font-size:24px;margin-bottom:10px;display:block}
+.stat-card.c1 .msym{color:var(--primary)}
+.stat-card.c2 .msym{color:var(--secondary)}
+.stat-card.c3 .msym{color:var(--tertiary)}
+.stat-card.c4 .msym{color:var(--on-surface-var)}
+.stat-num{
+  font-size:32px;font-weight:900;line-height:1;letter-spacing:-1px;
+  color:var(--on-surface);
+}
+.stat-lbl{font-size:13px;font-weight:600;color:var(--on-surface-var);margin-top:6px}
+
+/* ── List card (M3 surface-container) ── */
+.list-card{
+  margin:0 20px 16px;
+  background:var(--sc-low);
+  border-radius:var(--r-xl);
+  padding:8px;
+  box-shadow:var(--e1);
+}
+.list-card-title{
+  font-size:13px;font-weight:800;color:var(--on-surface-var);
+  padding:12px 12px 8px;letter-spacing:.2px;
+}
+.bar-row{
+  display:flex;align-items:center;gap:14px;
+  padding:12px;border-radius:var(--r-m);
+  transition:background .2s;
+}
+.bar-row:active{background:var(--sc-high)}
+.bar-avatar{
+  width:40px;height:40px;border-radius:var(--r-full);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:16px;color:var(--on-primary-container);
+}
+.bar-info{flex:1;min-width:0}
+.bar-name{
+  font-size:15px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.bar-track{
+  height:6px;background:var(--sc-highest);border-radius:var(--r-full);
+  margin-top:6px;overflow:hidden;
+}
+.bar-fill{
+  height:100%;background:var(--primary);border-radius:var(--r-full);
+  transform-origin:left;animation:growBar .8s var(--ease-emph) both;
+}
+.bar-val{
+  font-size:14px;font-weight:800;color:var(--on-surface-var);
+  font-variant-numeric:tabular-nums;flex-shrink:0;
+}
+
+/* ── FAB (M3 Expressive, large) ── */
+.fab{
+  position:fixed;right:20px;bottom:24px;
+  height:64px;padding:0 24px;
+  border:none;border-radius:var(--r-l);
+  background:var(--primary);color:var(--on-primary);
+  display:flex;align-items:center;gap:12px;
+  font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;
+  box-shadow:var(--e3);
+  transition:transform .3s var(--ease-spring), box-shadow .3s;
+  z-index:20;
+}
+.fab:active{transform:scale(.94)}
+.fab .msym{font-size:28px}
+
+/* ── Animations ── */
+@keyframes revealUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes growBar{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+.stat-card{animation:revealUp .5s var(--ease-emph) both}
+.stat-card.c1{animation-delay:.30s}
+.stat-card.c2{animation-delay:.36s}
+.stat-card.c3{animation-delay:.42s}
+.stat-card.c4{animation-delay:.48s}
+.list-card{animation:revealUp .5s var(--ease-emph) .54s both}
+
+/* avatar colors */
+.av1{background:var(--primary-container)}
+.av2{background:var(--secondary-container);color:var(--on-secondary-container)}
+.av3{background:var(--tertiary-container);color:var(--on-tertiary-container)}
+.av4{background:var(--sc-highest);color:var(--on-surface-var)}
+</style>
+</head>
+<body>
+
+<!-- Top App Bar -->
+<div class="appbar">
+  <div class="appbar-brand">
+    <div class="appbar-logo"><span class="msym">chat</span></div>
+    <div class="appbar-title">Talky</div>
+  </div>
+  <div class="appbar-actions">
+    <button class="icon-btn"><span class="msym">search</span></button>
+    <button class="icon-btn"><span class="msym">settings</span></button>
+  </div>
+</div>
+
+<!-- Hero greeting -->
+<div class="hero">
+  <div class="hero-greet">С возвращением</div>
+  <div class="hero-name">Привет, Алекс</div>
+  <div class="hero-sub">Вот что происходило в твоих чатах за 7 дней</div>
+</div>
+
+<!-- Primary action -->
+<div class="hero-card">
+  <div class="hero-card-icon"><span class="msym">auto_awesome</span></div>
+  <div class="hero-card-text">
+    <div class="hero-card-title">Задать вопрос</div>
+    <div class="hero-card-sub">Спроси что угодно о своих чатах</div>
+  </div>
+  <span class="msym hero-card-arrow">chevron_right</span>
+</div>
+
+<!-- Stats -->
+<div class="section-label">Обзор за неделю</div>
+<div class="stat-grid">
+  <div class="stat-card c1">
+    <span class="msym">inventory_2</span>
+    <div class="stat-num">12.3k</div>
+    <div class="stat-lbl">в архиве</div>
+  </div>
+  <div class="stat-card c2">
+    <span class="msym">forum</span>
+    <div class="stat-num">128</div>
+    <div class="stat-lbl">активных чатов</div>
+  </div>
+  <div class="stat-card c3">
+    <span class="msym">north_east</span>
+    <div class="stat-num">146</div>
+    <div class="stat-lbl">отправлено</div>
+  </div>
+  <div class="stat-card c4">
+    <span class="msym">south_west</span>
+    <div class="stat-num">8.7k</div>
+    <div class="stat-lbl">получено</div>
+  </div>
+</div>
+
+<!-- Top chats list -->
+<div class="section-label">Топ чатов</div>
+<div class="list-card">
+  <div class="bar-row">
+    <div class="bar-avatar av1">S</div>
+    <div class="bar-info">
+      <div class="bar-name">spline community</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+    </div>
+    <div class="bar-val">2.0k</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-avatar av2">A</div>
+    <div class="bar-info">
+      <div class="bar-name">AFaGP Комментарии</div>
+      <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="bar-val">1.7k</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-avatar av3">R</div>
+    <div class="bar-info">
+      <div class="bar-name">Ross CHAT</div>
+      <div class="bar-track"><div class="bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="bar-val">1.3k</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-avatar av4">R</div>
+    <div class="bar-info">
+      <div class="bar-name">Rozetked Discuss</div>
+      <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+    </div>
+    <div class="bar-val">1.2k</div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab">
+  <span class="msym">add</span>
+  Анализ
+</button>
+
+</body>
+</html>

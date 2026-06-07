@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h2>Двухфакторная аутентификация</h2>
+  <p class="muted">У тебя включена облачная двухфакторка. Введи пароль.</p>
+  <form method="post" action="/2fa">
+    <label>Пароль 2FA</label>
+    <input type="password" name="password" required autofocus />
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <button class="btn primary" type="submit">Продолжить</button>
+  </form>
+  <div class="step">Шаг 3 из 4</div>
+</section>
+{% endblock %}

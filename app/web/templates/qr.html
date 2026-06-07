@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow center">
+  <h2>Сканируй QR-код</h2>
+  <p class="muted">
+    Открой Telegram → <b>Настройки → Устройства → Подключить устройство</b><br/>
+    и наведи камеру на этот код.
+  </p>
+  <div class="qr"><img src="data:image/png;base64,{{ qr_b64 }}" alt="QR" /></div>
+  <p id="status" class="muted">Ожидание сканирования…</p>
+  <form id="finalize" method="post" action="/login/qr/finalize" style="display:none">
+    <button class="btn primary" type="submit">Продолжить</button>
+  </form>
+  <p class="muted small">
+    Код обновляется автоматически. Если ничего не происходит более минуты —
+    <a href="/login/qr">обновить</a>.
+  </p>
+  <div class="step">Шаг 3 из 4</div>
+</section>
+
+<script>
+async function poll() {
+  try {
+    const r = await fetch('/login/qr/status')
+    const j = await r.json()
+    if (j.status === 'ok') {
+      document.getElementById('status').textContent = 'Сканирование принято! Завершаем…'
+      document.getElementById('finalize').submit()
+      return
+    }
+    if (j.status === '2fa') {
+      window.location = '/2fa'
+      return
+    }
+  } catch (e) {}
+  setTimeout(poll, 2000)
+}
+poll()
+</script>
+{% endblock %}
